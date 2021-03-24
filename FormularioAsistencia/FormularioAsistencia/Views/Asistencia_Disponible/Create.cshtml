@@ -1,0 +1,55 @@
+﻿@model FormularioAsistencia.Models.Asistencia_Disponible
+
+@{
+    ViewData["Title"] = "Create";
+}
+    <div class="container-User">
+        <h1>Crear Asistencia</h1>
+        <form asp-action="Create">
+            <div class="row">
+                <div class="col">
+
+                    <div asp-validation-summary="ModelOnly" class="error">
+                        <h2>
+                            <i class="fa fa-exclamation-triangle " aria-hidden="true"></i>
+                        </h2>
+                    </div>
+                    <div id="wrapper">
+                        <div class="box">
+                            <div class="form-group">
+                                <label asp-for="Nombre " class="control-label"></label>
+                                <input asp-for="Nombre" class="form-control" />
+                                <span asp-validation-for="Nombre" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="box">
+                            <div class="form-group">
+                                <label asp-for="Profesor " class="control-label"></label>
+                                <input asp-for="Profesor" class="form-control" />
+                                <span asp-validation-for="Profesor" class="error"></span>
+                                <label style="font-size:1rem">Solo para proyectos.</label>
+                            </div>
+
+                        </div>
+                        <div class="box">
+                            <div class="form-group">
+                                <label asp-for="Grupos " class="control-label"></label>
+                                <input asp-for="Grupos" class="form-control" />
+                                <span asp-validation-for="Grupos" class="error"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <input type="submit" value="Crear" class="btn-rol center" style="width:50%" />
+                </div>
+            </div>
+        </form>
+        </div>
+
+
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }

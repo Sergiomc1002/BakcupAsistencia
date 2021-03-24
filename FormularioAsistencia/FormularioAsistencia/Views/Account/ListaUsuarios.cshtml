@@ -1,0 +1,89 @@
+﻿
+@model ListaUsuariosViewModel
+
+@{
+    ViewBag.Title = "Lista de Usuarios";
+}
+
+<h1>
+    Lista de Usuarios
+    <a asp-action="Register" asp-controller="Account"
+       class="btn btn-rol" style="width:auto">
+        Crear Usuario
+    </a>
+</h1>
+
+@if (Model.Users.Any())
+{
+<div class="scrollit">
+    <table class="table table-admin">
+
+        <thead>
+            <tr>
+                <th>
+                    Usuario
+                </th>
+                @foreach (var rol in Model.Roles)
+                {
+                    <th>
+                        @rol.Name
+                    </th>
+                }
+                <th>
+ 
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Users.Count(); i++)
+            {
+                <tr>
+                    <td>
+                        @Model.Users[i].Email
+                    </td>
+                    @foreach (var pertenece in Model.Pertenece[i])
+                    {
+                        <td style="text-align:center;">
+                            @if (pertenece)
+                            {
+                                <i class="fa fa-check" aria-hidden="true" style="color:green;"></i>
+
+                            }
+                            else
+                            {
+                                <i class="fa fa-times" aria-hidden="true" style="color:red;"></i>
+
+                            }
+                        </td>
+                    }
+                <td>
+                    <a asp-action="EditarUsuario" asp-controller="Account" asp-route-id="@Model.Users[i].Id" class=""> Editar</a> 
+                    
+                </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No hay usuarios aún.
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Intente crear un usuario nuevo.
+            </h5>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,54 @@
+﻿
+@model RegistrarEstudianteViewModel
+
+@{
+    ViewBag.Title = "User Registration";
+}
+
+<div class="container-User">
+    <h1>Crear Usuario</h1>
+
+    <hr />
+
+    <form asp-action="RegistrarEstudiante">
+        <div class="row">
+            <div class="col">
+
+                <div asp-validation-summary="ModelOnly" class="error">
+                    <div style="padding-left: 14px;font-size: 1.4rem;">
+                        
+                            <i class="fa fa-exclamation-triangle center" aria-hidden="true"> </i>
+                            Advertencia:
+                        
+                    </div>
+                </div>
+                <div id="wrapper">
+                    <div class="box">
+                        <div class="form-group">
+                            <label asp-for="Email " class="control-label">Correo Electrónico:</label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="error"></span>
+                        </div>
+                    </div>
+                   
+                   
+                    </div>
+                </div>
+            </div>
+           
+
+        <div class="row">
+            <div class="col text-center">
+                <input type="submit" value="Registrar" class="btn-rol center" style="width: 50%;" />
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

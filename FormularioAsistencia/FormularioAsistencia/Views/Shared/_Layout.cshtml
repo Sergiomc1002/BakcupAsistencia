@@ -1,0 +1,236 @@
+﻿
+@using Microsoft.AspNetCore.Identity
+@using FormularioAsistencia;
+@inject SignInManager<IdentityUser> SignInManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FormularioAsistencia</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/custom.css" />
+    <link rel="stylesheet" href="~/js/site.js" />
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" />
+
+</head>
+<body>
+
+    <header>
+
+        <div class="container header">
+            <nav id="encabezado" class="navbar navbar-light bg-light">
+                <a class="navbar-brand " href="https://www.fisica.ucr.ac.cr/">
+                    <img src="~/images/EscuelaFisica.png" class="logo-efis" alt="Escuela Fisica">
+                </a>
+                <a class="navbar float-right " href="https://www.ucr.ac.cr/">
+                    <img src="~/images/firma-horizontal-una-linea-cmyk.png" class="logo-ucr" alt="Universidad de Costa Rica">
+                </a>
+            </nav>
+        </div>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-options border-bottom box-shadow mb-3">
+            <div class="container">
+
+
+
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row " style="padding-right: 2%;">
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
+                        <ul class="navbar-nav flex-grow-1" style="color:black">
+                            <li class="nav-item dropdown" style="padding-left: 10px;padding-right: 10px;">
+                                <a class="nav-link " asp-controller="Home" asp-action="Index" aria-haspopup="true" aria-expanded="false" style="color:black;">
+                                    Inicio
+                                </a>
+                            </li>
+                            @if (SignInManager.IsSignedIn(User))
+
+                            {
+
+
+                                @if (User.IsInRole("Estudiante"))
+                                {
+                                    <li class="nav-item dropdown" style="padding-left: 10px;padding-right: 10px;">
+                                        <a class="nav-link " asp-controller="Solicitud" asp-action="Create" aria-haspopup="true" aria-expanded="false" style="color:black;">
+                                            Generar solicitud
+                                        </a>
+                                    </li>
+                                    <li class="nav-item dropdown" style="padding-left: 10px;padding-right: 10px;">
+                                        <a class="nav-link " asp-controller="Solicitud" asp-action="VerListaPersonal" aria-haspopup="true" aria-expanded="false" style="color:black;">
+                                            Mis Solicitudes Enviadas
+                                        </a>
+                                    </li>
+
+
+                                }
+                                @if (User.IsInRole("Administrativos"))
+                                {
+                                    <li class="nav-item dropdown" style="padding-left: 10px;padding-right: 10px;">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black;">
+                                            Administrador
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item text-dark" id="dp" asp-area="" asp-controller="Account" asp-action="ListaUsuarios">Usuarios</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item text-dark" id="dp" asp-area="" asp-controller="Admin" asp-action="VerRoles">Roles</a>
+                                        </div>
+                                    </li>
+                                }
+
+                                @if (User.IsInRole("Administrativos") || User.IsInRole("Secretaría"))
+                                {
+                                    <li class="nav-item dropdown" style="padding-left: 10px;padding-right: 10px;">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black;">
+                                            Secretaría
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item text-dark" id="dp" asp-area="" asp-controller="Asistencia_Disponible" asp-action="Index">Asistencias Disponibles</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item text-dark" id="dp" asp-area="" asp-controller="Semestre" asp-action="Index">Semestres</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item text-dark" data-toggle="modal" data-target=".bootstrapmodal">Nuevo Semestre</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item text-dark" id="dp" asp-area="" asp-controller="Solicitud" asp-action="NuevoAño">Nuevo Año</a>
+
+                                        </div>
+                                    </li>
+
+
+                                }
+                                @if (User.IsInRole("Administrativos") || User.IsInRole("Profesores"))
+                                {
+                                    <li class="nav-item dropdown" style="padding-left: 10px;padding-right: 10px;">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black;">
+                                            Profesores
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item text-dark" id="dp" asp-area="" asp-controller="Asistencia_Disponible" asp-action="Index">Asistencias Disponibles</a>
+                                        </div>
+                                    </li>
+                                }
+
+                            }
+
+                        </ul>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <ul class="navbar-nav ml-auto">
+
+                                <li class="nav-item dropdown" style="padding-right: 10px;">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black;">
+                                        Cuenta  @User.Identity.Name.Split("@")[0]
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item text-dark" id="dp" asp-area="" asp-controller="account" asp-action="CambiarContraseña">Cambiar Contraseña</a>
+                                        <div class="dropdown-divider"></div>
+                                        <form method="post" asp-controller="account" asp-action="logout">
+                                            <button type="submit" class="dropdown-item text-dark" id="dp">
+                                                Cerrar Sesión
+                                            </button>
+                                        </form>
+                                        <div class="dropdown-divider"></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul class="navbar-nav ml-auto">
+                                <a class="Nav-item text-dark" id="dp" asp-area="" asp-controller="account" asp-action="login" style="padding-left: 10px;padding-right: 10px;margin-top: auto;margin-bottom: auto;">Iniciar Sesión</a>
+                                <a class="Nav-item text-dark" id="dp" asp-area="" asp-controller="account" asp-action="registrarestudiante" style="padding-left: 10px;padding-right: 10px;margin-top: auto;margin-bottom: auto;">Crear Cuenta</a>
+                            </ul>
+                        }
+                    </div>
+                </div>
+
+
+            </div>
+        </nav>
+
+    </header>
+    <div id="page-container">
+
+        <div id="content-wrap">
+            <div class="container fill">
+                <!--<main role="main" >-->
+                @RenderBody()
+                <!--</main>-->
+            </div>
+        </div>
+        <footer class="border-top footer text-muted bg-footer">
+            <div class="container">
+                <div id="wrapfooterR">
+                    <div class="box">
+                        <img src="~/images/EscuelaFisica-wb.png" class="logo-efisf" alt="Escuela Fisica">
+                    </div>
+                    <div class="box">
+                        &copy; Todos los derechos reservados. 2020
+                        <br />
+                    </div>
+
+
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+
+    <div class="modal fade bootstrapmodal" id="NS">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-eliminar">
+                    <div class="modal-title"><h2><i class="fa fa-exclamation-triangle " aria-hidden="true"></i>  Eliminar Solicitud</h2></div>
+                    <button data-dismiss="modal" class="close"><span>&times</span></button>
+
+                </div>
+                <div class="modal-body modal-conteliminar">
+                    <h3>Esta a punto de registrar un cambio de semestre.</h3>
+                    <h3>¿Desea continuar?</h3>
+                </div>
+                <div class="modal-footer">
+                    <form method="post" asp-controller="Solicitud" asp-action="NuevoSemestre">
+                        <button type="submit" class="btn btn-eliminar">Aceptar</button>
+                        <button class="btn btn-rol" data-dismiss="modal">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bootstrapmodal" id="NA">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-eliminar">
+                    <div class="modal-title"><h2><i class="fa fa-exclamation-triangle " aria-hidden="true"></i>  Eliminar Solicitud</h2></div>
+                    <button data-dismiss="modal" class="close"><span>&times</span></button>
+
+                </div>
+                <div class="modal-body modal-conteliminar">
+                    <h3>Iniciar un nuevo año va a eliminar todas las solicitudes de asistencia</h3>
+                    <h3>¿Desea continuar?</h3>
+                </div>
+                <div class="modal-footer">
+                    <form method="post" asp-controller="Solicitud" asp-action="NuevoAño">
+                        <button type="submit" class="btn btn-eliminar">Aceptar</button>
+                        <button class="btn btn-rol" data-dismiss="modal">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

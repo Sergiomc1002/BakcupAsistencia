@@ -1,0 +1,152 @@
+﻿@model FormularioAsistencia.Models.Solicitud
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+<p>
+    <a asp-action="Descargar" asp-route-id="@Model.SolicitudId">Descargar Solicitud</a>
+</p>
+<div>
+    <h4>Solicitud</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nivel)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nivel)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Apellido1)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Apellido1)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Apellido2)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Apellido2)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CorreoSolicitante)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CorreoSolicitante)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Carne)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Carne)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CarreraQueCursa)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CarreraQueCursa)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NumeroDeCreditos)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumeroDeCreditos)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Cedula)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Cedula)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NumeroDeCuenta)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumeroDeCuenta)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InformeDeMatricula)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InformeDeMatricula)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExpedienteAcademico)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExpedienteAcademico)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FotocopiaCedula)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FotocopiaCedula)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Asistencia)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Asistencia)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CantidadHE)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CantidadHE)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CantidadHA)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CantidadHA)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Telefono1)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Telefono1)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Telefono2)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Telefono2)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Promedio)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Promedio)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CuentaBancaria)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CuentaBancaria)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TieneHE)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TieneHE)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TieneHA)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TieneHA)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.SolicitudId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

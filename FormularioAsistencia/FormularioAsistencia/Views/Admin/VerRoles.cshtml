@@ -1,0 +1,67 @@
+﻿
+@model IEnumerable<IdentityRole>
+
+@{
+    ViewBag.Title = "Roles";
+}
+
+
+
+@if (Model.Any())
+    {<h1>
+            Roles
+            <a class="btn btn-rol mb-3" style="width:auto;content:check; margin:auto !important" asp-action="CrearRol"
+               asp-controller="admin">Añadir Rol</a>
+        </h1>
+        <div id="wrapperRoles">
+            @foreach (var role in Model)
+            {
+
+                <div class="box-roles">
+                    <div class="card mb-3" style="text-align: center; border-radius: 1.25rem;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="font-size:2rem;">@role.Name</h5>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-controller="Admin" asp-action="EditarRol" asp-route-id="@role.Id" class="btn btn-rol">Editar</a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+             
+            }
+
+        </div>
+
+    }
+    else
+    {
+        <h1>Roles</h1>
+        <div class="card">
+            <div class="card-header">
+                No hay roles creados.
+            </div>
+            <div class="card-body">
+                <a class="btn btn-rol" style="width:auto"
+                   asp-controller="admin" asp-action="CrearRol">
+                    Crear Rol
+                </a>
+            </div>
+        </div>
+
+
+
+    }
+
+<script>
+   
+        // As pointed out in comments,
+        // it is unnecessary to have to manually call the modal.
+        // $('#addBookDialog').modal('show');
+
+</script>
+  
+
+

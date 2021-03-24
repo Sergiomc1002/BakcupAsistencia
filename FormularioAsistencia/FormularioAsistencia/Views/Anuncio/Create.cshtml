@@ -1,0 +1,46 @@
+﻿@model FormularioAsistencia.Models.Anuncio
+
+
+@{
+    ViewBag.Title = "Creat Anuncio";
+}
+
+<div class="container-User">
+    <h1>Crear Anuncio</h1>
+
+    <hr />
+
+    <form asp-action="Create">
+        <div class="row">
+            <div class="col">
+                <div asp-validation-summary="ModelOnly" class="error">
+                    <h2>
+                        <i class="fa fa-exclamation-triangle " aria-hidden="true"></i>
+                    </h2>
+                </div>
+                <div id="wrapper">
+                    <div class="box">
+                        <div class="form-group">
+                            <label asp-for="Fecha " class="control-label">Fecha:</label>
+                            <input asp-for="Fecha"  class="form-control"  type="date" value="@Model.Fecha.ToString("yyyy-MM-dd")"  />
+                            <span asp-validation-for="Fecha" class="error"></span>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="form-group">
+                            <label asp-for="Descripcion " class="control-label">Descripción:</label>
+                            <input asp-for="Descripcion" class="form-control" />
+                            <span asp-validation-for="Descripcion" class="error"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <input type="submit" value="Guardar" class="btn btn-rol" />
+                <button asp-controller="Home" asp-action="index" class="btn btn-rol" >Cancelar</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Semestre]
+(
+	Id		INT				IDENTITY (1, 1) NOT NULL,
+	Numero				SMALLINT		NOT NULL,
+	PRIMARY KEY CLUSTERED (Id ASC)
+)

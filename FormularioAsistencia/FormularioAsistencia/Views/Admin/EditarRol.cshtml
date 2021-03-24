@@ -1,0 +1,100 @@
+﻿
+@model EditarRolViewModel
+
+@{
+    ViewBag.Title = "Editar Rol";
+}
+
+<h1>Editar Rol</h1>
+
+<form method="post" class="mt-3">
+
+    @if (Model.Rol == "Administrativos")
+    {
+        <div class="form-group row">
+            <label asp-for="Rol" class="col-sm-2 col-form-label">Nombre:</label>
+            <div class="col-sm-10">
+                <input asp-for="Rol" class="form-control" readonly>
+                <span asp-validation-for="Rol" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group row">
+            <div class="col">
+                <button type="submit" class="btn btn-rol" disabled>Actualizar</button>
+                <a asp-action="VerRoles" class="btn btn-rol">Salir</a>
+                
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="form-group row">
+            <label asp-for="Rol" class="col-sm-2 col-form-label">Nombre:</label>
+            <div class="col-sm-10">
+                <input asp-for="Rol" class="form-control">
+                <span asp-validation-for="Rol" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group row">
+            <div class="col">
+                <button type="submit" class="btn btn-rol">Actualizar</button>
+                <a asp-action="VerRoles" class="btn btn-rol">Salir</a>
+                <a class=" open-delete btn btn-rol btn-eliminar" data-toggle="modal" data-id="@Model.Rol" data-target=".bootstrapmodal" style="position: relative; float: right;">Borrar</a>
+            </div>
+        </div>
+    }
+
+
+    <div class="card">
+        <div class="card-header">
+            <h3>Usuarios en el rol</h3>
+        </div>
+        <div class="card-body">
+            @if (Model.Users.Any())
+            {
+                foreach (var user in Model.Users)
+                {
+                    <h5 class="card-title">@user</h5>
+                }
+            }
+            else
+            {
+                <h5 class="card-title">No hay usuarios en el rol</h5>
+            }
+        </div>
+
+        <div class="card-footer">
+            <a asp-controller="Admin" asp-action="EditarRolDeUsuario"
+               asp-route-Id="@Model.Id" class="btn btn-rol">
+                Añadir o Sacar un usuario de este rol.
+            </a>
+        </div>
+
+    </div>
+</form>
+<div class="modal fade bootstrapmodal" id="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modal-eliminar">
+                <div class="modal-title"><h2><i class="fa fa-exclamation-triangle " aria-hidden="true"></i>  Eliminar Rol</h2></div>
+                <button data-dismiss="modal" class="close"><span>&times</span></button>
+
+            </div>
+            <div class="modal-body modal-conteliminar">
+                <h3>Está seguro que desea eliminar el rol de @Model.Rol ?</h3>
+            </div>
+            <div class="modal-footer">
+                <form asp-controller="Admin" asp-action="BorrarRol" name="Id" asp-route-id="@Model.Id" method="post">
+                    <button type="submit" class="btn btn-rol btn-eliminar">Borrar</button>
+                    <button class="btn btn-rol" data-dismiss="modal">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

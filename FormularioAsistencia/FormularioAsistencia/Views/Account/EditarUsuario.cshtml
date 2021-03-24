@@ -1,0 +1,75 @@
+﻿
+@model EditarUsuarioViewModel
+
+@{
+    ViewBag.Title = "Editar Usuario";
+}
+
+<h1>Editar Usuario</h1>
+
+<form method="post" class="mt-3">
+
+    <div class="form-group row">
+        <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Email" class="form-control" disabled>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3>Roles del usuario:</h3>
+        </div>
+        <div class="card-body">
+            @if (Model.Roles.Any())
+                {
+                for(int i=0;i<Model.Roles.Count();i++)
+                {
+                    <div class="checkbox">
+                        <label asp-for="@Model.Pertenece[i]">
+                            <input asp-for="@Model.Pertenece[i]" />
+                            @Model.Roles[i].Name
+                        </label>
+                    </div>
+                }
+            }
+            else
+            {
+                <h5 class="card-title">No existen roles aún.</h5>
+            }
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-rol">
+                Actualizar
+            </button>
+            <a class=" open-delete btn btn-rol btn-eliminar" data-toggle="modal"  data-target=".bootstrapmodal" style="position: relative; float: right;">Eliminar Uusario</a>
+            <a asp-action="ListaUsuarios" class="btn btn-rol">Cancelar</a>
+        </div>
+    </div>
+
+    
+</form>
+
+<div class="modal fade bootstrapmodal" id="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modal-eliminar">
+                <div class="modal-title"><h2><i class="fa fa-exclamation-triangle " aria-hidden="true"></i>  Eliminar Usuario</h2></div>
+                <button data-dismiss="modal" class="close"><span>&times</span></button>
+
+            </div>
+            <div class="modal-body modal-conteliminar">
+                <h3>Está seguro que desea eliminar el Usario de @Model.Email ?</h3>
+            </div>
+            <div class="modal-footer">
+                <form method="post" asp-action="BorrarUsuario" asp-controller="Account" asp-route-id="@Model.Id">
+                    <button type="submit" class="btn btn-eliminar">Eliminar Usuario</button>
+
+                    <button class="btn btn-rol" data-dismiss="modal">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

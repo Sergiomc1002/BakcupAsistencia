@@ -1,0 +1,165 @@
+﻿@model IEnumerable<FormularioAsistencia.Models.Solicitud>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nivel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CorreoSolicitante)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Carne)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CarreraQueCursa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroDeCreditos)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cedula)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroDeCuenta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InformeDeMatricula)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpedienteAcademico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FotocopiaCedula)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Asistencia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CantidadHE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CantidadHA)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Promedio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CuentaBancaria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TieneHE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TieneHA)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nivel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CorreoSolicitante)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Carne)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CarreraQueCursa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroDeCreditos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cedula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroDeCuenta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InformeDeMatricula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpedienteAcademico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FotocopiaCedula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Asistencia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantidadHE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantidadHA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Promedio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CuentaBancaria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TieneHE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TieneHA)
+            </td>
+            <td>
+                @if (User.IsInRole("Administrativos") || User.IsInRole("Secretaría"))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.SolicitudId">Edit</a>
+                }
+                |
+                <a asp-action="Details" asp-route-id="@item.SolicitudId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.SolicitudId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

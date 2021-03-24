@@ -1,0 +1,59 @@
+﻿
+@model ReiniciarContraseñaViewModel
+@{
+    ViewBag.Title = "Reiniciar Contraseña";
+}
+
+<div class="container-User">
+    <h1>Reiniciar Contraseña</h1>
+
+    <hr />
+
+    <form  method="post">
+        <div class="row">
+            <div class="col">
+
+                <div asp-validation-summary="ModelOnly" class="error">
+                    <input asp-for="email" type="hidden" />
+                    <input asp-for="email" type="hidden" />
+                    <div style="padding-left: 14px;font-size: 1.4rem;">
+
+                        <i class="fa fa-exclamation-triangle center" aria-hidden="true"> </i>
+                        Advertencia:
+
+                    </div>
+                </div>
+                <div id="wrapper">
+                    <div class="box">
+                        <div class="form-group">
+                            <label asp-for="Contraseña " class="control-label"></label>
+                            <input asp-for="Contraseña" class="form-control" />
+                            <span asp-validation-for="Contraseña" class="error"></span>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="form-group">
+                            <label asp-for="Confirmacion " class="control-label"></label>
+                            <input asp-for="Confirmacion" class="form-control" />
+                            <span asp-validation-for="Confirmacion" class="error"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <button type="submit" class="btn btn-rol center">Reiniciar Contraseña</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

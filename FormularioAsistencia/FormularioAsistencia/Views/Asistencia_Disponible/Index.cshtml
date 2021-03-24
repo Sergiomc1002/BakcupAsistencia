@@ -1,0 +1,79 @@
+﻿
+@model IEnumerable<FormularioAsistencia.Models.Asistencia_Disponible>
+
+@{
+    ViewBag.Title = "Lista de Usuarios";
+}
+
+    <h1>
+        Asistencias Disponibles
+        @if (User.IsInRole("Administrativos") || User.IsInRole("Secretaría"))
+        { 
+            <a asp-action="Create" asp-controller="Asistencia_Disponible"
+               class="btn btn-rol" style="width:auto">
+                Crear Asitencia
+            </a>
+        }
+    </h1>
+        
+
+<div class="scrollit">
+    <table class="table table-admin">
+
+        <thead>
+            <tr>
+                <th>
+                    Asistencia
+                </th>
+                <th>
+                    Encargado
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @item.Nombre
+                </td>
+                <td>
+                    @if (item.Profesor == null)
+                    {
+                        <i class="fa fa-minus" aria-hidden="true"></i>
+
+                    }
+                    else
+                    {
+                        @item.Profesor
+
+                    }
+                </td>
+
+                <td>
+                    @if (User.IsInRole("Administrativos") || User.IsInRole("Secretaría"))
+                    {
+                        <a asp-action="Edit" asp-controller="Asistencia_Disponible" asp-route-id="@item.IdAsistencia" > Editar</a>
+                    }
+                    </td>
+                <td>
+                    <a asp-action="VerLista" asp-controller="Solicitud" asp-route-id_asistencia="@item.IdAsistencia" asp-route-semestre="@ViewBag.Semestre" class=""> Ver Solicitudes</a>
+                </td>
+                <td>
+                    <a asp-action="Descargar" asp-controller="Asistencia_Disponible" asp-route-id="@item.IdAsistencia" class=""> Descargar solicitudes</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+
+

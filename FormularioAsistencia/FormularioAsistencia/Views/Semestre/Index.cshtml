@@ -1,0 +1,48 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Semestres";
+}
+
+@if (ViewBag.Semestres.Count!=0)
+{<h1>
+        Semestres
+       
+    </h1>
+    <div id="wrapperRoles">
+        @foreach (var item in ViewBag.Semestres)
+        {
+
+            <div class="box-roles">
+                <div class="card mb-3" style="text-align: center; border-radius: 1.25rem;">
+                    <div class="card-body">
+                        <h5 class="card-title" style="font-size:2rem;">Semestre @item.Numero</h5>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-controller="Solicitud" asp-action="VerListaSemestral" asp-route-id="0" asp-route-semestre="@item.Numero" class="btn btn-rol">Ver Solicitudes</a>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        }
+
+    </div>
+
+}
+else
+{
+    <h1>Semestre</h1>
+    <div class="card">
+        <div class="card-header">
+            No hay semestres registrados.
+        </div>
+
+    </div>
+
+
+
+}

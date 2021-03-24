@@ -1,0 +1,212 @@
+﻿
+@model VerListaPersonalViewModel
+
+@{
+    ViewBag.Title = "Solicitudes";
+}
+
+    <h1>
+        Solicitudes de @User.Identity.Name.Split("@")[0]
+
+
+    </h1>
+
+<div class="scrollit">
+    <table class="table table-admin">
+        <thead>
+            <tr>
+                <th>
+                    Curso
+                </th>
+                <th>
+                    Cédula
+                </th>
+                <th>
+                    Carné
+                </th>
+                <th>
+                    Primer Apellido
+                </th>
+                <th>
+                    Segundo Apellido
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Teléfono 1
+                </th>
+                <th>
+                    Correo Electónico
+                </th>
+                <th>
+                    Carrera
+                </th>
+                <th>
+                    Nivel
+                </th>
+                <th>
+                    N° Créditos
+                </th>
+                <th>
+
+                    Ponderado
+
+
+                </th>
+                <th>
+                    Tiene Cuenta OAF
+                </th>
+                <th>
+                    N° de Cuenta
+                </th>
+                <th>
+                    Banco
+                </th>
+                <th>
+                    Horas Asistente
+                </th>
+                <th>
+                    Horas Estudiante
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Solicitudes)
+            {
+            <tr>
+                <td>
+                    @Model.Asistencias.Where(x=>x.IdAsistencia==item.Asistencia).FirstOrDefault().Nombre
+                </td>
+                <td>
+                    @item.Cedula
+                </td>
+
+                <td>
+                    @item.Carne
+                </td>
+
+                <td>
+                    @item.Apellido1
+                </td>
+
+                <td>
+                    @item.Apellido2
+                </td>
+
+                <td>
+                    @item.Nombre
+                </td>
+
+                <td>
+                    @item.Telefono1
+                </td>
+
+                <td>
+                    @item.CorreoSolicitante
+                </td>
+
+                <td>
+                    @item.CarreraQueCursa
+                </td>
+
+                <td>
+                    @item.Nivel
+                </td>
+                <td>
+                    @item.NumeroDeCreditos
+                </td>
+                <td>
+                    @if (item.PromedioRevisado == 0)
+                    {
+                        <i class="fa fa-minus" aria-hidden="true"></i>
+                    }
+                    else
+                    {
+                        @item.PromedioRevisado
+                    }
+
+                </td>
+                <td>
+                    @if (item.CuentaBancaria)
+                    {
+
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    }
+                    else
+                    {
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    }
+                </td>
+                <td>
+                    @if (item.CuentaBancaria)
+                    {
+
+                        <i class="fa fa-minus" aria-hidden="true"></i>
+                    }
+                    else
+                    {
+                        @item.NumeroDeCuenta
+                    }
+                </td>
+
+                <td>
+                    @if (item.CuentaBancaria)
+                    {
+
+                        <i class="fa fa-minus" aria-hidden="true"></i>
+                    }
+                    else
+                    {
+                        @item.Banco
+                    }
+                </td>
+                <td>
+                    @if (item.TieneHA)
+                    {
+
+                        @item.CantidadHA
+                    }
+                    else
+                    {
+                        <i class="fa fa-minus" aria-hidden="true"></i>
+                    }
+
+                </td>
+                <td>
+                    @if (item.TieneHE)
+                    {
+
+                        @item.CantidadHE
+                    }
+                    else
+                    {
+                        <i class="fa fa-minus" aria-hidden="true"></i>
+                    }
+
+
+                </td>
+
+                <td>
+                    <a asp-action="Descargar" asp-controller="Solicitud" asp-route-id="@item.SolicitudId" class=""> Descargar</a>
+
+                </td>
+                <td>
+                    <a asp-action="VerMas" asp-controller="Solicitud" asp-route-id_a="@item.SolicitudId" class=""> Ver Más</a>
+                </td>
+
+
+            </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+

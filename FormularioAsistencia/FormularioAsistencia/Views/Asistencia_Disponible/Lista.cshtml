@@ -1,0 +1,63 @@
+﻿
+@model IEnumerable<FormularioAsistencia.Models.Asistencia_Disponible>
+
+@{
+    ViewBag.Title = "Lista de Usuarios";
+}
+
+<h1>
+    Asistencias Disponibles
+    <a asp-action="Create" asp-controller="Asistencia_Disponible"
+       class="btn btn-primary mb-3" style="width:auto">
+        Crear Asitencia
+    </a>
+</h1>
+
+    <div class="scrollit">
+        <table class="table table-admin">
+
+            <thead>
+                <tr>
+                    <th>
+                        Asistencia
+                    </th>
+                    <th>
+                        Encargado
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @item.Nombre
+                    </td>
+                    <th style="text-align:center;">
+                        @if (item.Profesor == null)
+                        {
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+
+                        }
+                        else
+                        {
+                            @item.Profesor
+
+                        }
+                    </th>
+                    }
+                    <td>
+                        <a asp-action="Edit" asp-controller="Asistencia_Disponible" asp-route-id="@item.IdAsistencia" class=""> Editar</a>
+
+                    </td>
+                    <td>
+                        <a asp-action="VerLista" asp-controller="Solcitudes" asp-route-id="@item.IdAsistencia" class=""> Ver Solicitudes</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+
+

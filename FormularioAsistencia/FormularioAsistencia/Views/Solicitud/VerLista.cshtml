@@ -1,0 +1,408 @@
+﻿
+@model VerListaSolicitudesViewModel
+
+@{
+    ViewBag.Title = "Solicitudes";
+}
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#linkGenerar').hide();
+            let grupos = [];
+            let funciones = [];
+            let nombres = [];
+            let apellido1 = [];
+            let apellido2 = [];
+            let carnes = [];
+
+            var temp_carne;
+            var temp_nombre;
+            var temp_apellido1;
+            var temp_apellido2;
+            var hay_seleccionados = false;
+            var temp;
+
+            $(document).on('click', '#generar', function () {
+                $('#carnes').val(carnes.toString());
+                $('#apellidos1').val(apellido1.toString());
+                $('#apellidos2').val(apellido2.toString());
+                $('#nombres').val(nombres.toString());
+                $('#funciones').val(funciones.toString());
+                $('#grupos').val(grupos.toString());
+            });
+
+            $(document).on('click', '#eliminarSeleccion', function(){
+                index = jQuery.inArray($(this).attr('data-carne'), carnes);
+                carnes.splice(index, 1);
+                grupos.splice(index, 1);
+                funciones.splice(index, 1);
+                nombres.splice(index, 1);
+                apellido1.splice(index, 1);
+                apellido2.splice(index, 1);
+                temp = "#" + $(this).attr('data-carne');
+                $(temp).show();
+                if (carnes.length == 0) {
+                    $(this).closest('div').remove();
+                    $('#linkGenerar').hide();
+                    hay_seleccionados = false;
+                }
+                else {
+                    $(this).closest('tr').remove();
+                }
+                guardar_val();
+            });
+
+            $(document).on('click', '#editarSeleccion', function () {
+                index = jQuery.inArray($(this).attr('data-carne'), carnes);
+                carnes.splice(index, 1);
+                grupos.splice(index, 1);
+                funciones.splice(index, 1);
+                nombres.splice(index, 1);
+                apellido1.splice(index, 1);
+                apellido2.splice(index, 1);
+                temp = "#" + $(this).attr('data-carne');
+                $(temp).show();
+                if (carnes.length == 0) {
+                    $(this).closest('div').remove();
+                    $('#linkGenerar').hide();
+                    hay_seleccionados = false;
+                }
+                else {
+                    $(this).closest('tr').remove();
+                }
+                guardar_val();
+            });
+
+            $("#guardar").click(function () {
+                grupos.push($('#grupo').val()+1);
+                funciones.push($('#trabajo_solicitud').val());
+                $('#seleccionarModal').modal('hide');
+                nombres.push(temp_nombre);
+                apellido1.push(temp_apellido1);
+                apellido2.push(temp_apellido2);
+                carnes.push(temp_carne);
+                if (!hay_seleccionados) {
+                    $('#seleccionados').append("<div id=\"divSeleccionados\"></div>");
+                    $('#divSeleccionados').append("<h1 id=\"tituloSeleccionados\">Estudiantes Seleccionados</h1>");
+                    $('#divSeleccionados').append("<table id=\"tablaSeleccionados\" class= \"table table-admin\"></table>");
+                    $('#tablaSeleccionados').append("<thead id= \"headSeleccionados\"></thead>");
+                    $('#headSeleccionados').append("<tr><th>Carné</th><th>Apellido 1</th><th>Apellido 2</th><th>Nombre</th><th>Grupo</th><th></th><th></th><th></th></tr>");
+                    $('#tablaSeleccionados').append("<tbody id= \"bodySeleccionados\"></tbody>");
+                    hay_seleccionados = true;
+                }
+                $('#bodySeleccionados').append("<tr><td>" + temp_carne + "</td>" + "<td>" + temp_apellido1 + "</td>" + "<td>" + temp_apellido2 + "</td>" + "<td>" + temp_nombre + "</td>" + "<td>" + $('#grupo').val() + "<td><button type=\"button\" id=\"eliminarSeleccion\" class=\"btn btn-link btn-sm\" data-carne=\"" + temp_carne + "\">Eliminar</button>" + "</td></tr>");
+                temp = "#" + temp_carne;
+                $(temp).hide();
+                $('#linkGenerar').show();
+                guardar_val();
+            });
+
+            //abrir el modal
+            $('.btn.btn-outline-secondary.btn-sm').click(function () {
+                temp_carne = $(this).attr('data-carne');
+                temp_nombre = $(this).attr('data-nombre');
+                temp_apellido1 = $(this).attr('data-apellido1');
+                temp_apellido2 = $(this).attr('data-apellido2');
+                var titulo = $(this).attr('data-carne') + ' ' + $(this).attr('data-nombre') + ' ' + $(this).attr('data-apellido1') + ' ' + $(this).attr('data-apellido2');
+                $("#seleccionarModalLabel").text(titulo);
+                $('#seleccionarModal').modal('show');
+            });
+
+            $(document).on('click', '#linkGenerar', function () {
+                var url = $(this).attr("href");
+                url = url.replace("carne_", carnes.toString());
+                url = url.replace("apellidos1_", apellido1.toString());
+                url = url.replace("apellidos2_", apellido2.toString());
+                url = url.replace("nombres_", nombres.toString());
+                url = url.replace("funciones_", funciones.toString());
+                url = url.replace("grupos_", grupos.toString());
+                $(this).attr("href", url);
+            });
+        });
+
+
+    </script>
+</head>
+
+<input type="hidden" id="carnes" name="custId" value="3487">
+<input type="hidden" id="apellidos1" name="custId" value="3487">
+<input type="hidden" id="apellidos2" name="custId" value="3487">
+<input type="hidden" id="nombres" name="custId" value="3487">
+<input type="hidden" id="funciones" name="custId" value="3487">
+<input type="hidden" id="custId" name="grupos" value="3487">
+
+<div id="seleccionados">
+    <a  id="linkGenerar" asp-action="generarPDF" asp-controller="Solicitud" asp-route-temp_carnes="carne_" asp-route-temp_apellidos1="apellidos1_" asp-route-temp_apellidos2="apellidos2_" asp-route-temp_nombres="nombres_" asp-route-temp_funciones="funciones_" asp-route-temp_grupos="grupos_" class="btn btn-link ">Generar PDF</a>
+</div>
+
+    <h1>
+        Solicitudes para @Model.Nombre
+        @if (User.IsInRole("Administrativos") || User.IsInRole("Secretaría"))
+        {
+            <a class=" open-delete btn btn-rol btn-eliminar" data-toggle="modal" data-target=".bootstrapmodal">Eliminar Solicitudes</a>
+        }
+
+    </h1>
+
+<div class="scrollit">
+    <table class="table table-admin">
+        <thead>
+            <tr>
+                <th>
+                    Cédula
+                </th>
+                <th>
+                    <a asp-action="VerLista" asp-route-orden="@ViewData["CarneSortParm"]" asp-route-id_asistencia="@Model.Id" style="color:white">
+                        Carné <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    </a>
+
+                </th>
+                <th>
+                    <a asp-action="VerLista" asp-route-orden="@ViewData["NameSortParm"]" asp-route-id_asistencia="@Model.Id" style="color:white">
+                        Primer Apellido <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    </a>
+
+                </th>
+                <th>
+                    Segundo Apellido
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Teléfono 1
+                </th>
+                <th>
+                    Correo Electónico
+                </th>
+                <th>
+                    Carrera
+                </th>
+                <th>
+                    Nivel
+                </th>
+                <th>
+                    N° Créditos
+                </th>
+                <th>
+
+                    <a asp-action="VerLista" asp-route-orden="@ViewData["PromSortParm"]" asp-route-id_asistencia="@Model.Id" style="color:white">
+                        Ponderado <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    </a>
+
+                </th>
+                <th>
+                    Tiene Cuenta OAF
+                </th>
+                <th>
+                    N° de Cuenta
+                </th>
+                <th>
+                    Banco
+                </th>
+                <th>
+                    Horas Asistente
+                </th>
+                <th>
+                    Horas Estudiante
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Solicitudes)
+            {
+            <tr id="@item.Carne">
+                <td>
+                    @item.Cedula
+                </td>
+
+                <td>
+                    @item.Carne
+                </td>
+
+                <td>
+                    @item.Apellido1
+                </td>
+
+                <td>
+                    @item.Apellido2
+                </td>
+
+                <td>
+                    @item.Nombre
+                </td>
+
+                <td>
+                    @item.Telefono1
+                </td>
+
+                <td>
+                    @item.CorreoSolicitante
+                </td>
+
+                <td>
+                    @item.CarreraQueCursa
+                </td>
+
+                <td>
+                    @item.Nivel
+                </td>
+                <td>
+                    @item.NumeroDeCreditos
+                </td>
+                <td>
+                    @if (item.PromedioRevisado == 0)
+                    {
+                        <i class="fa fa-minus" aria-hidden="true"></i>
+                    }
+                    else
+                    {
+                        @item.PromedioRevisado
+                    }
+
+                </td>
+                <td>
+                    @if (item.CuentaBancaria)
+                    {
+
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    }
+                    else
+                    {
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    }
+                </td>
+                <td>
+                    @if (item.CuentaBancaria)
+                    {
+
+                        <i class="fa fa-minus" aria-hidden="true"></i>
+                    }
+                    else
+                    {
+                        @item.NumeroDeCuenta
+                    }
+                </td>
+
+                <td>
+                    @if (item.CuentaBancaria)
+                    {
+
+                        <i class="fa fa-minus" aria-hidden="true"></i>
+                    }
+                    else
+                    {
+                        @item.Banco
+                    }
+                </td>
+                <td>
+                    @if (item.TieneHA)
+                    {
+
+                        @item.CantidadHA
+                    }
+                    else
+                    {
+                        <i class="fa fa-minus" aria-hidden="true"></i>
+                    }
+
+                </td>
+                <td>
+                    @if (item.TieneHE)
+                    {
+
+                        @item.CantidadHE
+                    }
+                    else
+                    {
+                        <i class="fa fa-minus" aria-hidden="true"></i>
+                    }
+
+
+                </td>
+
+                <td>
+                    <a asp-action="Descargar" asp-controller="Solicitud" asp-route-id="@item.SolicitudId" class="btn btn-link btn-sm"> Descargar</a>
+
+                </td>
+                <td>
+                    <a asp-action="VerMas" asp-controller="Solicitud" asp-route-id_a="@item.SolicitudId" class="btn btn-link btn-sm"> Ver Más</a>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-outline-secondary btn-sm"  data-carne="@item.Carne" data-nombre="@item.Nombre" data-apellido1="@item.Apellido1" data-apellido2="@item.Apellido2">
+                        Seleccionar
+                    </button>
+                </td>
+
+            </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+
+<div class="modal fade" id="seleccionarModal" tabindex="-1" role="dialog" aria-labelledby="selecionarLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width:200%; right:48%" >
+            <div class="modal-header">
+                <h5 class="modal-title" id="seleccionarModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Seleccione el grupo
+                <br />
+                <select name="grupo" id="grupo">
+                    @for (int i = 0; i < Model.Asistencia.Grupos; ++i)
+                    {
+                        <option value="Grupo @i">Grupo @(i+1)</option>
+                    }
+                </select>
+                <br/>
+                <label>¿Que trabajo va a realizar el estudiante?</label>
+                <br/>
+                <textarea rows="5" cols="100" id="trabajo_solicitud" ></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="guardar">Guardar cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bootstrapmodal" id="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modal-eliminar">
+                <div class="modal-title"><h2><i class="fa fa-exclamation-triangle " aria-hidden="true"></i>  Eliminar Solicitudes</h2></div>
+                <button data-dismiss="modal" class="close"><span>&times</span></button>
+
+            </div>
+            <div class="modal-body modal-conteliminar">
+                <h3>Está seguro que desea eliminar todas las solicitudes asociadas a esta asistencia? </h3>
+            </div>
+            <div class="modal-footer">
+                <form method="post" asp-action="BorrarTodas" asp-route-id="@Model.Id">
+                    <button type="submit" class="btn btn-eliminar">Eliminar Solicitudes</button>
+
+                    <button class="btn btn-rol" data-dismiss="modal">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

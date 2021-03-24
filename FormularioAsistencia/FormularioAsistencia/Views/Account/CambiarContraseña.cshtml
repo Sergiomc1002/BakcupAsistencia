@@ -1,0 +1,64 @@
+﻿
+@model CambiarContraseñaViewModel
+@{
+    ViewBag.Title = "Cambiar Contraseña";
+}
+
+<div class="container-User">
+    <h1>Cambiar Contraseña</h1>
+
+    <hr />
+
+    <form asp-action="CambiarContraseña">
+        <div class="row">
+            <div class="col">
+
+                <div asp-validation-summary="ModelOnly" class="error">
+                    <div style="padding-left: 14px;font-size: 1.4rem;">
+
+                        <i class="fa fa-exclamation-triangle center" aria-hidden="true"> </i>
+                        Advertencia:
+
+                    </div>
+                </div>
+                <div id="wrapper">
+                    <div class="box">
+                        <div class="form-group">
+                            <label asp-for="Actual " class="control-label"></label>
+                            <input asp-for="Actual" class="form-control" />
+                            <span asp-validation-for="Actual" class="error"></span>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="form-group">
+                            <label asp-for="NuevaContrasena " class="control-label"></label>
+                            <input asp-for="NuevaContrasena" class="form-control" />
+                            <span asp-validation-for="NuevaContrasena" class="error"></span>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="form-group">
+                            <label asp-for="Confirmar " class="control-label"></label>
+                            <input asp-for="Confirmar" class="form-control" />
+                            <span asp-validation-for="Confirmar" class="error"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <button type="submit"  class="btn btn-rol center" >Cambiar Contraseña</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
